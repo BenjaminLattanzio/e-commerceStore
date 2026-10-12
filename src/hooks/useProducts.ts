@@ -1,0 +1,20 @@
+import { useEffect, useState } from 'react'
+import { getProducts, type Product } from '../data/products'
+
+export function useProducts() {
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let active = true
+    getProducts().then((items) => {
+      if (active) {
+        setProducts(items)
+        setLoading(false)
+      }
+    })
+    return () => { active = false }
+  }, [])
+
+  return { products, loading }
+}
