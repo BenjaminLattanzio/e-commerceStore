@@ -17,59 +17,48 @@ If you are developing a production application, we recommend updating the config
 
 ```js
 export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+  # Field Supply
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+  A responsive demo storefront for considered clothing, footwear, accessories, and home goods. Built with React, TypeScript, Vite, and React Router.
 
-      // Other configs...
+  ## Getting started
+
+  Requires Node.js and npm.
+
+  ```bash
+  npm install
+  npm run dev
+  ```
+
+  Vite prints the local URL when the development server starts.
+
+  ## Features
+
+  - Browse a product catalog; search by name or description, filter by category, and sort by price or rating.
+  - Open product details and add items to a persistent shopping bag.
+  - Complete the demo checkout and review order history from the account page.
+  - Responsive layouts for desktop and mobile.
+
+  ## Routes
+
+  - `/` — storefront, catalog, search, filters, and sorting
+  - `/product/:id` — product details
+  - `/cart` — shopping bag
+  - `/checkout` — delivery form and demo order placement
+  - `/account` — demo sign-in and order history
+
+  ## Catalog and demo data
+
+  The catalog requests products from DummyJSON and keeps a balanced sample from supported categories. If the request fails or returns too few supported products, the curated catalog in `src/data/products.ts` is used instead. Product photography and the page fonts are loaded from external image and font services.
+
+  Cart contents, demo account name/email, and order history are stored in browser `localStorage`. The account form is not connected to an authentication service. Checkout does not process payments or save delivery addresses; it creates a local demo order. Do not use real credentials or payment information.
+
+  ## Project commands
+
+  ```bash
+  npm run dev      # Start the Vite development server
+  npm run build    # Type-check and create a production build
+  npm run lint     # Run ESLint
+  npm run preview  # Preview the production build locally
+  ```
     ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
